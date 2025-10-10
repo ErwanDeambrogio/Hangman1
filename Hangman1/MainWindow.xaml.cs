@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Windows.Resources;
 using System.Windows.Shapes;
 
 
@@ -19,42 +20,70 @@ namespace Hangman1
 
 
 
-    public partial class MainWindow : Window
-    {
-
-        // variable global
-        Random rand = new Random();
-        string[] list_mots = { "ordinateur", "souris", "clavier", "ecran", "telephone" };
-        string selectedword;
-        int vie = 0;
-
-        public MainWindow()
+        public partial class MainWindow : Window
         {
-            InitializeComponent();
-        }
+            private string[] list_mots = { "chat", "chien", "maison", "ordinateur", "voiture" };
+            private string motMystere;
+            private char[] motAffiche;
+            int vie = 5;
 
-        public void StartGame()
-        {
-            string mot = list_mots[rand.Next(list_mots.Length)];
-            char[] motAffiche = new char[mot.Length];
-            for (int i = 0; i < mot.Length; i++)
+            public MainWindow()
             {
-                motAffiche[i] = '*';
+                InitializeComponent();
+                InitialiserJeu();
             }
 
-            vie = 5;
-
-        }
-
-        private void BTN_Letter_Click(object sender, RoutedEventArgs e)
-        {
-            Button btn = sender as Button;    
-            if (btn != null)
+            private void InitialiserJeu()
             {
-                string lettre = btn.Content.ToString(); 
+                Random rand = new Random();
+                motMystere = list_mots[rand.Next(list_mots.Length)];
 
+                motAffiche = new char[motMystere.Length];
+                for (int i = 0; i < motMystere.Length; i++)
+                {
+                    motAffiche[i] = '_';
+                }
+
+                Txt_MotCache.Text = string.Join(" ", motAffiche);
+            }
+
+            private void BTN_Letter_Click(object sender, RoutedEventArgs e)
+            {
+                Button btn = sender as Button;
+                if (btn == null) return;
+
+                char lettre = btn.Content.ToString()[0];
+                btn.IsEnabled = false;
+
+                bool trouve = false;
+
+                for (int i = 0; i < motMystere.Length; i++)
+                {
+                    if (char.ToLower(motMystere[i]) == char.ToLower(lettre))
+                    {
+                        motAffiche[i] = motMystere[i];
+                        trouve = true;
+                    }
+                }
+
+                Txt_MotCache.Text = string.Join(" ", motAffiche);
+
+                if (!trouve)
+                {
+                btn.Background = Brushes.Red;
+                btn.IsEnabled = false;
+                vie--;
+            }
+                else
+                {
+
+                btn.Background = Brushes.Green;
+                btn.IsEnabled = false;
+                {
+
+                
+                }
+                }
             }
         }
     }
-}
-

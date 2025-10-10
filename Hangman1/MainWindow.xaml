@@ -5,30 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hangman1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Jeu du Pendu" Height="450" Width="800">
 
     <Grid>
-        <!-- Définit 3 lignes dans la grille principale -->
+        <!-- Grille principale -->
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <!-- Zone titre - Ligne 0 -->
+        <!-- Titre -->
         <Grid x:Name="Grd_Title" Grid.Row="0" Background="LightSlateGray">
-            <Label Content="Hangman" FontSize="30" FontFamily="Algerian" Background="LightSlateGray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Content="HANGMAN"
+                   FontSize="30"
+                   FontFamily="Algerian"
+                   Foreground="White"
+                   HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center"/>
         </Grid>
 
-        <!-- Zone jeux - Ligne 1 -->
+        <!-- Zone de jeu -->
         <Grid x:Name="Grd_game" Grid.Row="1">
+
+            <!-- Déclaration des ressources en premier -->
             <Grid.Resources>
-                <!-- Style Boutons lettres -->
                 <Style TargetType="Button">
-                    <Setter Property="Margin" Value="3.5"/>
-                    <Setter Property="Background" Value="Black"/>
-                    <Setter Property="Foreground" Value="White"/>
-                    <Setter Property="FontSize" Value="13"/>
+                    <Setter Property="Margin" Value="3"/>
+                    <Setter Property="Background" Value="#E0E0E0"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="FontSize" Value="20"/>
                     <Setter Property="FontWeight" Value="Bold"/>
                     <Setter Property="BorderThickness" Value="0"/>
                     <Setter Property="Template">
@@ -37,19 +43,19 @@
                                 <Border x:Name="border"
                                         Background="{TemplateBinding Background}" 
                                         CornerRadius="5"
-                                        Padding="1"
+                                        Padding="0.001"
                                         SnapsToDevicePixels="True">
                                     <Border.Effect>
-                                        <DropShadowEffect Color="#888888" BlurRadius="10" ShadowDepth="4" Opacity="0.4"/>
+                                        <DropShadowEffect Color="#888888" BlurRadius="2" ShadowDepth="4" Opacity="0.4"/>
                                     </Border.Effect>
                                     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="border" Property="Background" Value="Gray"/>
+                                        <Setter TargetName="border" Property="Background" Value="#D0D0D0"/>
                                     </Trigger>
                                     <Trigger Property="IsPressed" Value="True">
-                                        <Setter TargetName="border" Property="Background" Value="Gray"/>
+                                        <Setter TargetName="border" Property="Background" Value="#C0C0C0"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -64,10 +70,30 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Zone Image -->
-            <Grid x:Name="Grd_image" Grid.Column="0" Background="LightSlateGray" />
+            <!-- Zone image à gauche -->
+            <Grid x:Name="Grd_image" Grid.Column="0" Background="LightSlateGray"/>
 
-            <!-- Zone Keypad -->
+            <!-- Zone du mot au centre -->
+            <Grid x:Name="Grd_Mot" Grid.Column="1" Background="LightSlateGray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <!-- Haut -->
+                    <RowDefinition Height="1*"/>
+                    <!-- Bas : mot caché -->
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="Txt_MotCache"
+                           Grid.Row="1"
+                           Text=""
+                           FontSize="36"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           TextAlignment="Center"/>
+            </Grid>
+
+            <!-- Zone clavier à droite -->
             <Grid x:Name="Grd_Keypad" Background="LightSlateGray" Grid.Column="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -86,7 +112,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Boutons lettres -->
+                <!-- Boutons lettres (A à Z) -->
                 <Button Grid.Row="0" Grid.Column="0" Content="A" Click="BTN_Letter_Click"/>
                 <Button Grid.Row="0" Grid.Column="1" Content="B" Click="BTN_Letter_Click"/>
                 <Button Grid.Row="0" Grid.Column="2" Content="C" Click="BTN_Letter_Click"/>
@@ -122,10 +148,7 @@
             </Grid>
         </Grid>
 
-        <!-- Zone Display - Ligne 2 -->
-        <Grid x:Name="Grd_Display" Grid.Row="2" Background="LightSlateGray"/>
-        <Label Content="Hangman" FontSize="30" FontFamily="Algerian" Background="LightSlateGray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <!-- Zone Footer (optionnel) -->
-
+        <!-- Pied de page -->
+        <Grid x:Name="G" Grid.Row="2" Background="LightSlateGray"/>
     </Grid>
 </Window>
