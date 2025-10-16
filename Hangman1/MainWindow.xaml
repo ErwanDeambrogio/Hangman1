@@ -95,14 +95,9 @@
 
             <!-- Zone clavier à droite -->
             <Grid x:Name="Grd_Keypad" Background="LightSlateGray" Grid.Column="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Ligne pour vies -->
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -111,40 +106,49 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Label pour les vies -->
+                <Label x:Name="Lbl_Vies" Content="Vies : 5" FontSize="20" Margin="10" Grid.Row="0" Grid.ColumnSpan="4" HorizontalContentAlignment="Center" Foreground="White"/>
 
                 <!-- Boutons lettres (A à Z) -->
-                <Button Grid.Row="0" Grid.Column="0" Content="A" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="0" Grid.Column="1" Content="B" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="0" Grid.Column="2" Content="C" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="0" Grid.Column="3" Content="D" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="1" Grid.Column="0" Content="A" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="1" Grid.Column="1" Content="B" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="1" Grid.Column="2" Content="C" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="1" Grid.Column="3" Content="D" Click="BTN_Letter_Click"/>
 
-                <Button Grid.Row="1" Grid.Column="0" Content="E" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="1" Grid.Column="1" Content="F" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="1" Grid.Column="2" Content="G" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="1" Grid.Column="3" Content="H" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="2" Grid.Column="0" Content="E" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="2" Grid.Column="1" Content="F" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="2" Grid.Column="2" Content="G" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="2" Grid.Column="3" Content="H" Click="BTN_Letter_Click"/>
 
-                <Button Grid.Row="2" Grid.Column="0" Content="I" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="2" Grid.Column="1" Content="J" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="2" Grid.Column="2" Content="K" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="2" Grid.Column="3" Content="L" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="3" Grid.Column="0" Content="I" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="3" Grid.Column="1" Content="J" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="3" Grid.Column="2" Content="K" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="3" Grid.Column="3" Content="L" Click="BTN_Letter_Click"/>
 
-                <Button Grid.Row="3" Grid.Column="0" Content="M" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="3" Grid.Column="1" Content="N" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="3" Grid.Column="2" Content="O" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="3" Grid.Column="3" Content="P" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="4" Grid.Column="0" Content="M" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="4" Grid.Column="1" Content="N" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="4" Grid.Column="2" Content="O" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="4" Grid.Column="3" Content="P" Click="BTN_Letter_Click"/>
 
-                <Button Grid.Row="4" Grid.Column="0" Content="Q" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="4" Grid.Column="1" Content="R" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="4" Grid.Column="2" Content="S" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="4" Grid.Column="3" Content="T" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="5" Grid.Column="0" Content="Q" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="5" Grid.Column="1" Content="R" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="5" Grid.Column="2" Content="S" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="5" Grid.Column="3" Content="T" Click="BTN_Letter_Click"/>
 
-                <Button Grid.Row="5" Grid.Column="0" Content="U" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="5" Grid.Column="1" Content="V" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="5" Grid.Column="2" Content="W" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="5" Grid.Column="3" Content="X" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="6" Grid.Column="0" Content="U" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="6" Grid.Column="1" Content="V" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="6" Grid.Column="2" Content="W" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="6" Grid.Column="3" Content="X" Click="BTN_Letter_Click"/>
 
-                <Button Grid.Row="6" Grid.Column="1" Content="Y" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="6" Grid.Column="2" Content="Z" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="7" Grid.Column="1" Content="Y" Click="BTN_Letter_Click"/>
+                <Button Grid.Row="7" Grid.Column="2" Content="Z" Click="BTN_Letter_Click"/>
             </Grid>
         </Grid>
 
