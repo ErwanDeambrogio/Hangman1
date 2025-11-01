@@ -1,12 +1,7 @@
 ﻿<Window x:Class="Hangman1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hangman1"
-        mc:Ignorable="d"
         Title="Jeu du Pendu" Height="450" Width="800">
-
     <Grid>
         <!-- Grille principale -->
         <Grid.RowDefinitions>
@@ -16,7 +11,7 @@
         </Grid.RowDefinitions>
 
         <!-- Titre -->
-        <Grid x:Name="Grd_Title" Grid.Row="0" Background="LightSlateGray">
+        <Grid Grid.Row="0" Background="Black">
             <Label Content="HANGMAN"
                    FontSize="30"
                    FontFamily="Algerian"
@@ -26,133 +21,171 @@
         </Grid>
 
         <!-- Zone de jeu -->
-        <Grid x:Name="Grd_game" Grid.Row="1">
+        <Grid Grid.Row="1">
 
-            <!-- Déclaration des ressources en premier -->
-            <Grid.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Margin" Value="3"/>
-                    <Setter Property="Background" Value="#E0E0E0"/>
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Setter Property="FontSize" Value="20"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
-                    <Setter Property="BorderThickness" Value="0"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="Button">
-                                <Border x:Name="border"
-                                        Background="{TemplateBinding Background}" 
-                                        CornerRadius="5"
-                                        Padding="0.001"
-                                        SnapsToDevicePixels="True">
-                                    <Border.Effect>
-                                        <DropShadowEffect Color="#888888" BlurRadius="2" ShadowDepth="4" Opacity="0.4"/>
-                                    </Border.Effect>
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="border" Property="Background" Value="#D0D0D0"/>
-                                    </Trigger>
-                                    <Trigger Property="IsPressed" Value="True">
-                                        <Setter TargetName="border" Property="Background" Value="#C0C0C0"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Grid.Resources>
+            <!-- Image de fond nuit -->
+            <Image Source="Images/nuit.jpg"
+                   Stretch="UniformToFill"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Panel.ZIndex="0"/>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
+            <!-- Contenu au-dessus -->
+            <Grid Panel.ZIndex="1">
 
-            <!-- Zone image à gauche -->
-            <Grid x:Name="Grd_image" Grid.Column="0" Background="LightSlateGray"/>
+                <!-- Styles boutons -->
+                <Grid.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Margin" Value="3"/>
+                        <Setter Property="Background" Value="#E0E0E0"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="FontSize" Value="20"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="border"
+                                            Background="{TemplateBinding Background}" 
+                                            CornerRadius="5"
+                                            Padding="0.001"
+                                            SnapsToDevicePixels="True">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="#888888" BlurRadius="2" ShadowDepth="4" Opacity="0.4"/>
+                                        </Border.Effect>
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#D0D0D0"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#C0C0C0"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Grid.Resources>
 
-            <!-- Zone du mot au centre -->
-            <Grid x:Name="Grd_Mot" Grid.Column="1" Background="LightSlateGray">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <!-- Haut -->
-                    <RowDefinition Height="1*"/>
-                    <!-- Bas : mot caché -->
-                </Grid.RowDefinitions>
-
-                <TextBlock x:Name="Txt_MotCache"
-                           Grid.Row="1"
-                           Text=""
-                           FontSize="36"
-                           FontWeight="Bold"
-                           Foreground="White"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           TextAlignment="Center"/>
-            </Grid>
-
-            <!-- Zone clavier à droite -->
-            <Grid x:Name="Grd_Keypad" Background="LightSlateGray" Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <!-- Ligne pour vies -->
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                <!-- Structure principale -->
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Label pour les vies -->
-                <Label x:Name="Lbl_Vies" Content="Vies : 5" FontSize="20" Margin="10" Grid.Row="0" Grid.ColumnSpan="4" HorizontalContentAlignment="Center" Foreground="White"/>
+                <!-- Image pendu -->
+                <Grid Grid.Column="0" Background="Transparent">
+                    <Image x:Name="Images_1"
+                           Source="Images/1.png"
+                           Stretch="Uniform"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Top"
+                           Margin="0,41,0,0"/>
+                </Grid>
 
-                <!-- Boutons lettres (A à Z) -->
-                <Button Grid.Row="1" Grid.Column="0" Content="A" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="1" Grid.Column="1" Content="B" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="1" Grid.Column="2" Content="C" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="1" Grid.Column="3" Content="D" Click="BTN_Letter_Click"/>
+                <!-- Mot caché -->
+                <Grid Grid.Column="1" Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="Txt_MotCache"
+                               Grid.Row="1"
+                               Text=""
+                               FontSize="36"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               TextAlignment="Center"/>
+                </Grid>
 
-                <Button Grid.Row="2" Grid.Column="0" Content="E" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="2" Grid.Column="1" Content="F" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="2" Grid.Column="2" Content="G" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="2" Grid.Column="3" Content="H" Click="BTN_Letter_Click"/>
+                <!-- Clavier et vies -->
+                <Grid x:Name="Grd_Keypad" Background="Transparent" Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <Button Grid.Row="3" Grid.Column="0" Content="I" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="3" Grid.Column="1" Content="J" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="3" Grid.Column="2" Content="K" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="3" Grid.Column="3" Content="L" Click="BTN_Letter_Click"/>
+                    <!-- Cœurs pour vies -->
+                    <Grid Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
 
-                <Button Grid.Row="4" Grid.Column="0" Content="M" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="4" Grid.Column="1" Content="N" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="4" Grid.Column="2" Content="O" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="4" Grid.Column="3" Content="P" Click="BTN_Letter_Click"/>
+                        <Image x:Name="Vie1" Source="Images/1vies.png" Height="30" Grid.Column="0"/>
+                        <Image x:Name="Vie2" Source="Images/1vies.png" Height="30" Grid.Column="1"/>
+                        <Image x:Name="Vie3" Source="Images/1vies.png" Height="30" Grid.Column="2"/>
+                        <Image x:Name="Vie4" Source="Images/1vies.png" Height="30" Grid.Column="3"/>
+                        <Image x:Name="Vie5" Source="Images/1vies.png" Height="30" Grid.Column="4"/>
+                    </Grid>
 
-                <Button Grid.Row="5" Grid.Column="0" Content="Q" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="5" Grid.Column="1" Content="R" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="5" Grid.Column="2" Content="S" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="5" Grid.Column="3" Content="T" Click="BTN_Letter_Click"/>
+                    <!-- Lettres A-Z -->
+                    <Button Grid.Row="1" Grid.Column="0" Content="A" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="1" Grid.Column="1" Content="B" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="1" Grid.Column="2" Content="C" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="1" Grid.Column="3" Content="D" Click="BTN_Letter_Click"/>
 
-                <Button Grid.Row="6" Grid.Column="0" Content="U" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="6" Grid.Column="1" Content="V" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="6" Grid.Column="2" Content="W" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="6" Grid.Column="3" Content="X" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="2" Grid.Column="0" Content="E" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="2" Grid.Column="1" Content="F" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="2" Grid.Column="2" Content="G" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="2" Grid.Column="3" Content="H" Click="BTN_Letter_Click"/>
 
-                <Button Grid.Row="7" Grid.Column="1" Content="Y" Click="BTN_Letter_Click"/>
-                <Button Grid.Row="7" Grid.Column="2" Content="Z" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="3" Grid.Column="0" Content="I" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="3" Grid.Column="1" Content="J" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="3" Grid.Column="2" Content="K" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="3" Grid.Column="3" Content="L" Click="BTN_Letter_Click"/>
+
+                    <Button Grid.Row="4" Grid.Column="0" Content="M" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="4" Grid.Column="1" Content="N" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="4" Grid.Column="2" Content="O" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="4" Grid.Column="3" Content="P" Click="BTN_Letter_Click"/>
+
+                    <Button Grid.Row="5" Grid.Column="0" Content="Q" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="5" Grid.Column="1" Content="R" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="5" Grid.Column="2" Content="S" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="5" Grid.Column="3" Content="T" Click="BTN_Letter_Click"/>
+
+                    <Button Grid.Row="6" Grid.Column="0" Content="U" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="6" Grid.Column="1" Content="V" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="6" Grid.Column="2" Content="W" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="6" Grid.Column="3" Content="X" Click="BTN_Letter_Click"/>
+
+                    <Button Grid.Row="7" Grid.Column="1" Content="Y" Click="BTN_Letter_Click"/>
+                    <Button Grid.Row="7" Grid.Column="2" Content="Z" Click="BTN_Letter_Click"/>
+
+                    <!-- Bouton test son -->
+                    <Button Grid.Row="7" Grid.Column="3" Content="Test Son" Click="TestSon_Click"/>
+                </Grid>
             </Grid>
         </Grid>
 
-        <!-- Pied de page -->
-        <Grid x:Name="G" Grid.Row="2" Background="LightSlateGray"/>
+        <!-- Pied avec auteur -->
+        <Grid Grid.Row="2" Background="Black">
+            <Label Content="Deambrogio Erwan"
+                   FontSize="30"
+                   Foreground="White"
+                   HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center"/>
+        </Grid>
     </Grid>
 </Window>
