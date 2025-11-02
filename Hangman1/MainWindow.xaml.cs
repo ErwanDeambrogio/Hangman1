@@ -2,143 +2,214 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+using System.Windows.Threading;
 using System.Windows.Media.Imaging;
 
 namespace Hangman1
 {
     public partial class MainWindow : Window
     {
-        private string[] list_mots = { "CHAT", "CHIEN", "MAISON", "ORDINATEUR", "VOITURE" };
-        private string motMystere;
-        private char[] motAffiche;
-        private int vie = 5;
+        private string[] list_mots = {
+        "CHAT", "CHIEN", "MAISON", "ORDINATEUR", "VOITURE", "PROGRAMME",
+        "BATEAU", "AVION", "ELEPHANT", "GUITARE", "PIANO", "VIOLON",
+        "LUNETTES", "TELEPHONE", "TABLE", "CHAISE", "MOTO", "ARBRES",
+        "FLEUR", "SOLEIL", "NUAGE", "PLAGE", "MONTAGNE", "PISCINE",
+        "FORET", "VILLE", "VILLAGE", "ECOLE", "BIBLIOTHEQUE", "MUSEE",
+        "THEATRE", "CINEMA", "JARDIN", "SOURIS", "CLAVIER", "ECRAN",
+        "IMPRIMANTE", "LAMPE", "TASSE", "ASSIETTE", "FOURCHETTE", "CUILLERE",
+        "COUTEAU", "CANAPE", "VELO", "MOTOCROSS", "TENNIS", "BASKET",
+        "FOOTBALL", "RUGBY", "HANDBALL", "NATATION", "COURSE", "CHOCOLAT",
+        "BONBON", "GLACE", "PAIN", "FROMAGE", "FRUITS", "LEGUMES",
+        "POISSON", "VIANDE", "SOUPE", "SALADE", "PIZZA", "HAMBURGER",
+        "HOTDOG", "LOGICIEL", "APPLICATION", "JEUX", "INTERNET",
+        "PROGRAMMATION", "LANGAGE", "ALGORITHME", "VARIABLE", "BOUCLE",
+        "CONDITION", "FONCTION", "OBJET", "CLASSE", "INTERFACE", "METHODE",
+        "PROJET", "MODULE", "EXCEPTION", "ERREUR", "TABLEAU", "CHAINE",
+        "NOMBRE", "ENTIER", "DECIMAL", "BOOLEAN", "CONSTANTE", "BIBLIOTHEQUE",
+        "DEVELOPPEUR", "INGENIEUR", "MEDECIN", "AVOCAT", "ARTISTE",
+        "CHAUFFEUR", "CUISINIER", "ENSEIGNANT", "JOURNALISTE", "PHOTOGRAPHE",
+        "PEINTRE", "SCULPTEUR", "ECRIVAIN", "MUSICIEN", "DANSEUR",
+        "ACTEUR", "DIRECTEUR", "PILOTE", "CAPITAINE", "MARIN", "VOYAGE",
+        "AVENTURE", "EXPLORATION", "DECISION", "STRATEGIE", "CONSEIL",
+        "IDEE", "PROJET", "PLAN", "MISSION", "OBJETIF", "REUSSITE",
+        "ECHEC", "BONHEUR", "TRISTESSE", "COLERE", "PEUR", "AMOUR",
+        "AMITIE", "FAMILLE", "VOYAGE", "VACANCES", "PLAISIR", "JEU",
+        "SANTE", "FORCE", "VITESSE", "AGILITE", "ENDURANCE", "EQUIPE",
+        "COMPETITION", "TOURNOI", "MEDAILLE", "TROPHEE", "VICTOIRE",
+        "DEFAITE", "CHALLENGE", "EXPERIENCE", "SAVOIR", "CONNAISSANCE",
+        "ETUDE", "APPRENTISSAGE", "SCIENTIFIQUE", "TECHNOLOGIE", "INNOVATION",
+        "ROBOT", "DRONE", "INTELLIGENCE", "ARTIFICIELLE", "VIRTUEL", "REALITE",
+        "AUGMENTEE", "INTERNET", "SITEWEB", "APPLICATION", "SMARTPHONE",
+        "TABLETTE", "ORDINATEUR", "SERVEUR", "BASEDEDONNEES", "RESEAU",
+        "SECURITE", "CRYPTOGRAPHIE", "CODE", "PROGRAMMEUR", "DEVELOPPEMENT",
+        "TEST", "DEBUG", "COMPILATION", "EXECUTION", "ERREUR", "CORRECTION",
+        "MAISON", "APPARTEMENT", "CHAMBRE", "SALON", "CUISINE", "SALLEDEBAIN",
+        "GARAGE", "JARDIN", "PISCINE", "BALCON", "TERRASSE", "TOIT",
+        "MUR", "FENETRE", "PORTE", "SOL", "PLAFOND", "ESCALIER",
+        "ELEVATEUR", "ASCENSEUR", "LUMIERE", "LAMPE", "TORCHE", "BOUGIE",
+        "ORDINATEUR", "SOURIS", "CLAVIER", "ECRAN", "IMPRIMANTE", "CASQUE",
+        "MICROPHONE", "ENCEINTE", "JEUVIDEO", "MANETTE", "TELECOMMANDE",
+        "CABLE", "PRISE", "BATTERIE", "CHARGEUR"
+        };
 
-        private MediaPlayer playerClick;
-        private MediaPlayer playerVictoire;
-        private MediaPlayer playerDefaite;
+        private string motSecret;
+        private char[] motAffiche;
+        private int vies = 5;
+
+        private DispatcherTimer timer;
+        private int tempsRestant = 30; // en secondes
 
         public MainWindow()
         {
             InitializeComponent();
-
-            // Initialisation sons WAV
-            playerClick = new MediaPlayer();
-            playerClick.Open(new Uri("pack://application:,,,/Sons/click.wav"));
-
-            playerVictoire = new MediaPlayer();
-            playerVictoire.Open(new Uri("pack://application:,,,/Sons/victoire.wav"));
-
-            playerDefaite = new MediaPlayer();
-            playerDefaite.Open(new Uri("pack://application:,,,/Sons/defaite.wav"));
-
-            InitialiserJeu();
+            InitGame();
+            InitTimer();
         }
 
-        private void InitialiserJeu()
+        private void InitTimer()
+        {
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+            UpdateTimerAffichage();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            tempsRestant--;
+
+            if (tempsRestant <= 0)
+            {
+                tempsRestant = 0;
+                UpdateTimerAffichage();
+                GameOver(false);
+                return;
+            }
+
+            UpdateTimerAffichage();
+        }
+
+        private void UpdateTimerAffichage()
+        {
+            TimeSpan ts = TimeSpan.FromSeconds(tempsRestant);
+            Txt_Timer.Text = ts.ToString(@"mm\:ss");
+
+            Txt_Timer.Foreground = tempsRestant <= 10
+                ? System.Windows.Media.Brushes.Red
+                : System.Windows.Media.Brushes.Yellow;
+        }
+
+        private void InitGame()
         {
             Random rand = new Random();
-            motMystere = list_mots[rand.Next(list_mots.Length)];
-            motAffiche = new char[motMystere.Length];
-            for (int i = 0; i < motMystere.Length; i++)
-                motAffiche[i] = '_';
+            motSecret = list_mots[rand.Next(list_mots.Length)];
 
+            motAffiche = motSecret.Select(c => '_').ToArray();
             Txt_MotCache.Text = string.Join(" ", motAffiche);
-            vie = 5;
-            UpdateImage();
-            UpdateCoeurs();
-            ReinitialiserBoutons();
+
+            vies = 5;
+            MiseAJourVies();
+
+            // Réinitialiser image pendu
+            Images_1.Source = new BitmapImage(new Uri("Images/1.png", UriKind.Relative));
+
+            // Réinitialiser timer
+            tempsRestant = 30;
+            UpdateTimerAffichage();
+
+            // Réactiver toutes les lettres
+            foreach (var ctrl in Grd_Keypad.Children)
+            {
+                if (ctrl is Button btn)
+                {
+                    btn.IsEnabled = true;
+                    btn.Background = System.Windows.Media.Brushes.LightGray;
+                }
+            }
+
+            // Masquer le bouton Restart
+            BtnRestart.Visibility = Visibility.Collapsed;
         }
 
         private void BTN_Letter_Click(object sender, RoutedEventArgs e)
         {
-            PlaySound(playerClick);
-
-            Button btn = sender as Button;
-            if (btn == null) return;
-
-            char lettre = btn.Content.ToString()[0];
+            Button btn = (Button)sender;
             btn.IsEnabled = false;
 
-            bool trouve = false;
-            for (int i = 0; i < motMystere.Length; i++)
+            string lettre = btn.Content.ToString();
+            bool bonneLettre = false;
+
+            for (int i = 0; i < motSecret.Length; i++)
             {
-                if (motMystere[i] == lettre)
+                if (motSecret[i].ToString() == lettre)
                 {
-                    motAffiche[i] = lettre;
-                    trouve = true;
+                    motAffiche[i] = lettre[0];
+                    bonneLettre = true;
                 }
             }
 
             Txt_MotCache.Text = string.Join(" ", motAffiche);
 
-            if (!trouve)
+            if (bonneLettre)
             {
-                btn.Background = Brushes.Red;
-                vie--;
-                UpdateImage();
-                UpdateCoeurs();
-
-                if (vie <= 0)
-                {
-                    PlaySound(playerDefaite);
-                    MessageBox.Show("Perdu ! Le mot était : " + motMystere);
-                    InitialiserJeu();
-                }
+                tempsRestant += 5;
             }
             else
             {
-                btn.Background = Brushes.Green;
-                if (!motAffiche.Contains('_'))
-                {
-                    PlaySound(playerVictoire);
-                    MessageBox.Show("Gagné ! Le mot était : " + motMystere);
-                    InitialiserJeu();
-                }
+                vies--;
+                tempsRestant -= 2;
+                MiseAJourVies();
+
+                // Mettre à jour image pendu
+                int indexImage = 6 - vies;
+                if (indexImage < 1) indexImage = 1;
+                if (indexImage > 6) indexImage = 6;
+
+                Images_1.Source = new BitmapImage(new Uri($"Images/{indexImage}.png", UriKind.Relative));
             }
-        }
 
-        private void UpdateImage()
-        {
-            int indexImage = 6 - vie;
-            if (indexImage < 1) indexImage = 1;
-            if (indexImage > 6) indexImage = 6;
+            UpdateTimerAffichage();
 
-            Images_1.Source = new BitmapImage(new Uri($"Images/{indexImage}.png", UriKind.Relative));
-        }
-
-        private void UpdateCoeurs()
-        {
-            Image[] viesImages = { Vie1, Vie2, Vie3, Vie4, Vie5 };
-            for (int i = 0; i < viesImages.Length; i++)
-                viesImages[i].Visibility = vie > i ? Visibility.Visible : Visibility.Hidden;
-        }
-
-        private void ReinitialiserBoutons()
-        {
-            foreach (var element in Grd_Keypad.Children)
+            if (vies <= 0)
             {
-                if (element is Button btn)
-                {
-                    btn.IsEnabled = true;
-                    btn.Background = Brushes.LightGray;
-                }
+                GameOver(false);
+            }
+            else if (!motAffiche.Contains('_'))
+            {
+                GameOver(true);
             }
         }
 
-        private void PlaySound(MediaPlayer player)
+        private void MiseAJourVies()
         {
-            player.Stop();
-            player.Position = TimeSpan.Zero;
-            player.Play();
+            Vie1.Visibility = vies >= 1 ? Visibility.Visible : Visibility.Hidden;
+            Vie2.Visibility = vies >= 2 ? Visibility.Visible : Visibility.Hidden;
+            Vie3.Visibility = vies >= 3 ? Visibility.Visible : Visibility.Hidden;
+            Vie4.Visibility = vies >= 4 ? Visibility.Visible : Visibility.Hidden;
+            Vie5.Visibility = vies >= 5 ? Visibility.Visible : Visibility.Hidden;
         }
 
-        // Bouton pour tester un son
-        private void TestSon_Click(object sender, RoutedEventArgs e)
+        private void GameOver(bool gagne)
         {
-            MediaPlayer testPlayer = new MediaPlayer();
-            testPlayer.Open(new Uri("pack://application:,,,/Sons/test.wav"));
-            testPlayer.Play();
+            timer.Stop();
+
+            MessageBox.Show(gagne ? $"🎉 Bravo, le mot était : {motSecret}" : $"💀 Perdu ! Le mot était : {motSecret}");
+
+            // Désactiver toutes les lettres
+            foreach (var ctrl in Grd_Keypad.Children)
+            {
+                if (ctrl is Button btn) btn.IsEnabled = false;
+            }
+
+            // Afficher le bouton Restart
+            BtnRestart.Visibility = Visibility.Visible;
+        }
+
+        private void BtnRestart_Click(object sender, RoutedEventArgs e)
+        {
+            InitGame();
+            timer.Start();
         }
     }
 }

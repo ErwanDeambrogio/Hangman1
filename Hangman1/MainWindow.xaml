@@ -30,6 +30,61 @@
                    VerticalAlignment="Stretch"
                    Panel.ZIndex="0"/>
 
+            <!-- ✅ TIMER AU CENTRE -->
+            <TextBlock x:Name="Txt_Timer"
+                       Text="00:30"
+                       FontSize="45"
+                       FontWeight="Bold"
+                       Foreground="Yellow"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Panel.ZIndex="10">
+                <TextBlock.Effect>
+                    <DropShadowEffect BlurRadius="10" Color="Black"/>
+                </TextBlock.Effect>
+            </TextBlock>
+
+            <!-- ✅ BOUTON RESTART AU-DESSUS DU TIMER -->
+            <Button x:Name="BtnRestart"
+                    Content="Restart"
+                    Width="120"
+                    Height="40"
+                    Visibility="Collapsed"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0,-80,0,0"
+                    Click="BtnRestart_Click"
+                    Panel.ZIndex="11">
+                <Button.Background>
+                    <SolidColorBrush Color="Red"/>
+                </Button.Background>
+                <Button.Foreground>
+                    <SolidColorBrush Color="White"/>
+                </Button.Foreground>
+                <Button.FontWeight>Bold</Button.FontWeight>
+                <Button.FontSize>18</Button.FontSize>
+                <Button.BorderThickness>0</Button.BorderThickness>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                Padding="2"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF6600"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#CC0000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
             <!-- Contenu au-dessus -->
             <Grid Panel.ZIndex="1">
 
@@ -172,9 +227,6 @@
 
                     <Button Grid.Row="7" Grid.Column="1" Content="Y" Click="BTN_Letter_Click"/>
                     <Button Grid.Row="7" Grid.Column="2" Content="Z" Click="BTN_Letter_Click"/>
-
-                    <!-- Bouton test son -->
-                    <Button Grid.Row="7" Grid.Column="3" Content="Test Son" Click="TestSon_Click"/>
                 </Grid>
             </Grid>
         </Grid>
