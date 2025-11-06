@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace Hangman1
 {
@@ -48,7 +49,7 @@ namespace Hangman1
         "MUR", "FENETRE", "PORTE", "SOL", "PLAFOND", "ESCALIER",
         "ELEVATEUR", "ASCENSEUR", "LUMIERE", "LAMPE", "TORCHE", "BOUGIE",
         "ORDINATEUR", "SOURIS", "CLAVIER", "ECRAN", "IMPRIMANTE", "CASQUE",
-        "MICROPHONE", "ENCEINTE", "JEUVIDEO", "MANETTE", "TELECOMMANDE",
+        "MICROPHONE", "ENCEINTE", "MANETTE", "TELECOMMANDE",
         "CABLE", "PRISE", "BATTERIE", "CHARGEUR"
         };
 
@@ -90,6 +91,7 @@ namespace Hangman1
             UpdateTimerAffichage();
         }
 
+
         private void UpdateTimerAffichage()
         {
             TimeSpan ts = TimeSpan.FromSeconds(tempsRestant);
@@ -124,7 +126,6 @@ namespace Hangman1
                 if (ctrl is Button btn)
                 {
                     btn.IsEnabled = true;
-                    btn.Background = System.Windows.Media.Brushes.LightGray;
                 }
             }
 
@@ -136,6 +137,12 @@ namespace Hangman1
         {
             Button btn = (Button)sender;
             btn.IsEnabled = false;
+
+          
+            MediaPlayer playMedia = new MediaPlayer();
+            playMedia.Open(new Uri("Sons/click.mp3", UriKind.Relative));
+            playMedia.Volume = 1;
+            playMedia.Play();
 
             string lettre = btn.Content.ToString();
             bool bonneLettre = false;
@@ -150,6 +157,9 @@ namespace Hangman1
             }
 
             Txt_MotCache.Text = string.Join(" ", motAffiche);
+            // Lettre correcte vert
+            btn.Background = new SolidColorBrush(Colors.Green);
+
 
             if (bonneLettre)
             {
@@ -160,6 +170,10 @@ namespace Hangman1
                 vies--;
                 tempsRestant -= 2;
                 MiseAJourVies();
+
+
+                // Lettre incorrecte rouge
+                btn.Background = new SolidColorBrush(Colors.Red);
 
                 // Mettre à jour image pendu
                 int indexImage = 6 - vies;
@@ -194,13 +208,29 @@ namespace Hangman1
         {
             timer.Stop();
 
+            // Afficher le mot complet
+            Txt_MotCache.Text = motSecret;
+
             MessageBox.Show(gagne ? $"🎉 Bravo, le mot était : {motSecret}" : $"💀 Perdu ! Le mot était : {motSecret}");
 
-            // Désactiver toutes les lettres
+            // Jouer le son correspondant
+            MediaPlayer playMedia = new MediaPlayer();
+            playMedia.Open(new Uri(gagne ? "Sons/victoire.mp3" : "Sons/defaite.mp3", UriKind.Relative));
+            playMedia.Volume = 1;
+            playMedia.Play();
+
             foreach (var ctrl in Grd_Keypad.Children)
             {
-                if (ctrl is Button btn) btn.IsEnabled = false;
+                if (ctrl is Button btn)
+                {
+                    string lettre = btn.Content.ToString().ToUpper();
+
+                    btn.Background = new SolidColorBrush(Colors.Black);
+
+                    btn.IsEnabled = false; // bloque le bouton
+                }
             }
+
 
             // Afficher le bouton Restart
             BtnRestart.Visibility = Visibility.Visible;

@@ -30,7 +30,7 @@
                    VerticalAlignment="Stretch"
                    Panel.ZIndex="0"/>
 
-            <!-- ✅ TIMER AU CENTRE -->
+            <!--  TIMER AU CENTRE -->
             <TextBlock x:Name="Txt_Timer"
                        Text="00:30"
                        FontSize="45"
@@ -44,7 +44,7 @@
                 </TextBlock.Effect>
             </TextBlock>
 
-            <!-- ✅ BOUTON RESTART AU-DESSUS DU TIMER -->
+            <!--  BOUTON RESTART AU-DESSUS DU TIMER -->
             <Button x:Name="BtnRestart"
                     Content="Restart"
                     Width="120"
@@ -92,8 +92,8 @@
                 <Grid.Resources>
                     <Style TargetType="Button">
                         <Setter Property="Margin" Value="3"/>
-                        <Setter Property="Background" Value="#E0E0E0"/>
-                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="Background" Value="Black"/>
+                        <Setter Property="Foreground" Value="White"/>
                         <Setter Property="FontSize" Value="20"/>
                         <Setter Property="FontWeight" Value="Bold"/>
                         <Setter Property="BorderThickness" Value="0"/>
@@ -112,10 +112,10 @@
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#D0D0D0"/>
+                                            <Setter TargetName="border" Property="Background" Value="Black"/>
                                         </Trigger>
                                         <Trigger Property="IsPressed" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#C0C0C0"/>
+                                            <Setter TargetName="border" Property="Background" Value="Black"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -123,6 +123,9 @@
                         </Setter>
                     </Style>
                 </Grid.Resources>
+                
+                
+                
 
                 <!-- Structure principale -->
                 <Grid.ColumnDefinitions>
@@ -234,10 +237,18 @@
         <!-- Pied avec auteur -->
         <Grid Grid.Row="2" Background="Black">
             <Label Content="Deambrogio Erwan"
-                   FontSize="30"
+                   FontSize="25"
                    Foreground="White"
                    HorizontalContentAlignment="Center"
                    VerticalContentAlignment="Center"/>
+        </Grid>
+        <Grid Grid.Row="1" Background="Transparent">
+            <Label Content="Score"
+           FontSize="25"
+           Foreground="White"
+           HorizontalContentAlignment="Center"
+           VerticalContentAlignment="Top"/>
+           
         </Grid>
     </Grid>
 </Window>
