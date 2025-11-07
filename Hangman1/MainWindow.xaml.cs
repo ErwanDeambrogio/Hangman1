@@ -11,60 +11,96 @@ namespace Hangman1
     public partial class MainWindow : Window
     {
         private string[] list_mots = {
-        "CHAT", "CHIEN", "MAISON", "ORDINATEUR", "VOITURE", "PROGRAMME",
-        "BATEAU", "AVION", "ELEPHANT", "GUITARE", "PIANO", "VIOLON",
-        "LUNETTES", "TELEPHONE", "TABLE", "CHAISE", "MOTO", "ARBRES",
-        "FLEUR", "SOLEIL", "NUAGE", "PLAGE", "MONTAGNE", "PISCINE",
-        "FORET", "VILLE", "VILLAGE", "ECOLE", "BIBLIOTHEQUE", "MUSEE",
-        "THEATRE", "CINEMA", "JARDIN", "SOURIS", "CLAVIER", "ECRAN",
-        "IMPRIMANTE", "LAMPE", "TASSE", "ASSIETTE", "FOURCHETTE", "CUILLERE",
-        "COUTEAU", "CANAPE", "VELO", "MOTOCROSS", "TENNIS", "BASKET",
-        "FOOTBALL", "RUGBY", "HANDBALL", "NATATION", "COURSE", "CHOCOLAT",
-        "BONBON", "GLACE", "PAIN", "FROMAGE", "FRUITS", "LEGUMES",
-        "POISSON", "VIANDE", "SOUPE", "SALADE", "PIZZA", "HAMBURGER",
-        "HOTDOG", "LOGICIEL", "APPLICATION", "JEUX", "INTERNET",
-        "PROGRAMMATION", "LANGAGE", "ALGORITHME", "VARIABLE", "BOUCLE",
-        "CONDITION", "FONCTION", "OBJET", "CLASSE", "INTERFACE", "METHODE",
-        "PROJET", "MODULE", "EXCEPTION", "ERREUR", "TABLEAU", "CHAINE",
-        "NOMBRE", "ENTIER", "DECIMAL", "BOOLEAN", "CONSTANTE", "BIBLIOTHEQUE",
-        "DEVELOPPEUR", "INGENIEUR", "MEDECIN", "AVOCAT", "ARTISTE",
-        "CHAUFFEUR", "CUISINIER", "ENSEIGNANT", "JOURNALISTE", "PHOTOGRAPHE",
-        "PEINTRE", "SCULPTEUR", "ECRIVAIN", "MUSICIEN", "DANSEUR",
-        "ACTEUR", "DIRECTEUR", "PILOTE", "CAPITAINE", "MARIN", "VOYAGE",
-        "AVENTURE", "EXPLORATION", "DECISION", "STRATEGIE", "CONSEIL",
-        "IDEE", "PROJET", "PLAN", "MISSION", "OBJETIF", "REUSSITE",
-        "ECHEC", "BONHEUR", "TRISTESSE", "COLERE", "PEUR", "AMOUR",
-        "AMITIE", "FAMILLE", "VOYAGE", "VACANCES", "PLAISIR", "JEU",
-        "SANTE", "FORCE", "VITESSE", "AGILITE", "ENDURANCE", "EQUIPE",
-        "COMPETITION", "TOURNOI", "MEDAILLE", "TROPHEE", "VICTOIRE",
-        "DEFAITE", "CHALLENGE", "EXPERIENCE", "SAVOIR", "CONNAISSANCE",
-        "ETUDE", "APPRENTISSAGE", "SCIENTIFIQUE", "TECHNOLOGIE", "INNOVATION",
-        "ROBOT", "DRONE", "INTELLIGENCE", "ARTIFICIELLE", "VIRTUEL", "REALITE",
-        "AUGMENTEE", "INTERNET", "SITEWEB", "APPLICATION", "SMARTPHONE",
-        "TABLETTE", "ORDINATEUR", "SERVEUR", "BASEDEDONNEES", "RESEAU",
-        "SECURITE", "CRYPTOGRAPHIE", "CODE", "PROGRAMMEUR", "DEVELOPPEMENT",
-        "TEST", "DEBUG", "COMPILATION", "EXECUTION", "ERREUR", "CORRECTION",
-        "MAISON", "APPARTEMENT", "CHAMBRE", "SALON", "CUISINE", "SALLEDEBAIN",
-        "GARAGE", "JARDIN", "PISCINE", "BALCON", "TERRASSE", "TOIT",
-        "MUR", "FENETRE", "PORTE", "SOL", "PLAFOND", "ESCALIER",
-        "ELEVATEUR", "ASCENSEUR", "LUMIERE", "LAMPE", "TORCHE", "BOUGIE",
-        "ORDINATEUR", "SOURIS", "CLAVIER", "ECRAN", "IMPRIMANTE", "CASQUE",
-        "MICROPHONE", "ENCEINTE", "MANETTE", "TELECOMMANDE",
-        "CABLE", "PRISE", "BATTERIE", "CHARGEUR"
-        };
+    "CHAT", "CHIEN", "MAISON", "VOITURE", "TABLE", "CHAIR",
+    "FLEUR", "ARBRE", "ROSE", "LUNE", "SOLEIL", "PAIN",
+    "FROMAGE", "JAMBON", "POISSON", "VIANDE", "LEGUME", "FRUIT",
+    "POMME", "BANANE", "ORANGE", "RAISIN", "FRAISE", "CERISE",
+    "MONTAGNE", "RIVIERE", "LAC", "FORET", "DESERT", "PLAGE",
+    "VENT", "PLUIE", "NEIGE", "TONNERRE", "OURS", "LOUP",
+    "RENARD", "SOURIS", "LAPIN", "TIGRE", "LION", "SINGE",
+    "VOITURE", "MOTO", "BUS", "TRAIN", "AVION", "BATEAU",
+    "ECOLE", "COLLEGE", "LYCEE", "BIBLIOTHEQUE", "MUSEE",
+    "THEATRE", "CINEMA", "PARC", "STADE", "HOPITAL",
+    "DOCTEUR", "INFIRMIER", "PROFESSEUR", "CUISINIER",
+    "POLICIER", "POMPIER", "AVOCAT", "JUGE", "ARTISTE",
+    "MUSICIEN", "CHANTEUR", "DANSEUR", "PEINTRE", "POETE",
+    "ACTEUR", "INFORMATIQUE", "LOGICIEL", "ALGORITHME",
+    "JEU", "VIDEOGAME", "PUZZLE", "BALLON", "JOUET", "TIGE",
+    "FEUILLE", "BRANCHE", "TRONC", "RACINE", "GRAINE",
+    "CHOCOLAT", "GLACE", "BONBON", "CARAMEL", "CONFITURE",
+    "TOMATE", "CAROTTE", "OIGNON", "AIL", "SEL", "POIVRE",
+    "HUILE", "VINAIGRE", "EAU", "VIN", "BIERE", "THE",
+    "CAFÉ", "PLAFOND", "MOQUETTE", "TAPIS", "RIDEAU",
+    "CANAPE", "FAUTEUIL", "TABLEBASSE", "ARMOIRE", "COMMODO",
+    "MATELAS", "OREILLER", "COUVERTURE", "DRAP", "LINGE",
+    "SERVIETTE", "SAVON", "SHAMPOOING", "DOUCHE", "BAIN",
+    "MIRROR", "TOILETTE", "BOL", "TASSE", "ASSIETTE",
+    "CUILLERE", "FOURCHETTE", "COUTEAU", "VERRE", "LAMPE",
+    "LUSTRE", "BOUGIE", "CHAUSSURE", "CHAUSSETTE", "PANTALON",
+    "CHEMISE", "ROBE", "JUPE", "VESTE", "MANTEAU", "GANT",
+    "BONNET", "ECHARPE", "CHAPEAU", "SAC", "PORTEFEUILLE",
+    "CLE", "VOITURE", "VELO", "METRO", "TRAM", "STATION",
+    "ROUTE", "RUE", "AVENUE", "PONT", "QUAI", "GARE",
+    "AEROPORT", "PORT", "JETEE", "PHARE", "OCÉAN", "MER",
+    "LAC", "RIVIERE", "FLEUVE", "PISCINE", "BASSIN", "FONTAINE",
+    "STATUE", "MONUMENT", "BATIMENT", "CHATEAU", "ÉGLISE",
+    "MOSQUEE", "TEMPLE", "SYNAGOGUE", "PARC", "SQUARE",
+    "FOIRE", "MARCHE", "BOUTIQUE", "SUPERMARCHE", "ÉPICERIE",
+    "BOULANGERIE", "PATISSERIE", "BOUCHERIE", "POISSONNERIE",
+    "PHARMACIE", "LIBRAIRIE", "BANQUE", "CAISSE", "POSTE",
+    "MAIRIE", "POLICE", "HOPITAL", "CLINIQUE", "LABORATOIRE",
+    "UNIVERSITE", "COLLEGE", "LYCEE", "ECOLE", "MATERNELLE"
+};
+
+
 
         private string motSecret;
         private char[] motAffiche;
         private int vies = 5;
+        private int score = 0;
+        private int streakt = 0;
+        private int parties = 0;
 
         private DispatcherTimer timer;
         private int tempsRestant = 30; // en secondes
 
+        private enum Difficulté { None, Easy, Medium, Hard }
+        private Difficulté difficulteChoisie = Difficulté.None;
+        private bool timerActive = false;
+
         public MainWindow()
         {
             InitializeComponent();
-            InitGame();
+
+            // --- Au démarrage, tout invisible ---
+            MettreToutInvisibleAvantChoixDifficulte();
+
             InitTimer();
+            InitGame();
+        }
+
+        private void MettreToutInvisibleAvantChoixDifficulte()
+        {
+            // Désactiver lettres
+            foreach (var ctrl in Grd_Keypad.Children)
+            {
+                if (ctrl is Button btn) btn.Visibility = Visibility.Hidden;
+            }
+
+            // Cœurs invisibles
+            Vie1.Visibility = Visibility.Hidden;
+            Vie2.Visibility = Visibility.Hidden;
+            Vie3.Visibility = Visibility.Hidden;
+            Vie4.Visibility = Visibility.Hidden;
+            Vie5.Visibility = Visibility.Hidden;
+
+            // Score, streak, parties invisibles
+            Txt_Score.Visibility = Visibility.Hidden;
+            Txt_Streak.Visibility = Visibility.Hidden;
+            Txt_Parties.Visibility = Visibility.Hidden;
+
+            // Timer invisible
+            Txt_Timer.Visibility = Visibility.Hidden;
         }
 
         private void InitTimer()
@@ -72,8 +108,6 @@ namespace Hangman1
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
-            timer.Start();
-            UpdateTimerAffichage();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -91,9 +125,16 @@ namespace Hangman1
             UpdateTimerAffichage();
         }
 
-
         private void UpdateTimerAffichage()
         {
+            if (!timerActive)
+            {
+                Txt_Timer.Visibility = Visibility.Hidden;
+                return;
+            }
+
+            Txt_Timer.Visibility = Visibility.Visible;
+
             TimeSpan ts = TimeSpan.FromSeconds(tempsRestant);
             Txt_Timer.Text = ts.ToString(@"mm\:ss");
 
@@ -104,32 +145,62 @@ namespace Hangman1
 
         private void InitGame()
         {
-            Random rand = new Random();
-            motSecret = list_mots[rand.Next(list_mots.Length)];
+            if (difficulteChoisie == Difficulté.None)
+            {
+                // Tout reste invisible
+                MettreToutInvisibleAvantChoixDifficulte();
+                return;
+            }
 
-            motAffiche = motSecret.Select(c => '_').ToArray();
-            Txt_MotCache.Text = string.Join(" ", motAffiche);
-
-            vies = 5;
-            MiseAJourVies();
-
-            // Réinitialiser image pendu
-            Images_1.Source = new BitmapImage(new Uri("Images/1.png", UriKind.Relative));
-
-            // Réinitialiser timer
-            tempsRestant = 30;
-            UpdateTimerAffichage();
-
-            // Réactiver toutes les lettres
+            // Activer lettres et les rendre visibles
             foreach (var ctrl in Grd_Keypad.Children)
             {
                 if (ctrl is Button btn)
                 {
                     btn.IsEnabled = true;
+                    btn.Background = new SolidColorBrush(Colors.Black);
+                    btn.Visibility = Visibility.Visible;
                 }
             }
 
-            // Masquer le bouton Restart
+            // Score/streak/parties visibles
+            Txt_Score.Visibility = Visibility.Visible;
+            Txt_Streak.Visibility = Visibility.Visible;
+            Txt_Parties.Visibility = Visibility.Visible;
+
+            Random rand = new Random();
+            motSecret = list_mots[rand.Next(list_mots.Length)];
+            motAffiche = motSecret.Select(c => '_').ToArray();
+            Txt_MotCache.Text = string.Join(" ", motAffiche);
+
+            // Vies selon difficulté
+            switch (difficulteChoisie)
+            {
+                case Difficulté.Easy:
+                case Difficulté.Medium:
+                    vies = 5;
+                    break;
+                case Difficulté.Hard:
+                    vies = 3;
+                    break;
+            }
+            MiseAJourVies();
+
+            // Image pendu
+            Images_1.Source = new BitmapImage(new Uri("Images/1.png", UriKind.Relative));
+
+            // Timer
+            if (timerActive)
+            {
+                tempsRestant = 30;
+                timer.Start();
+            }
+            else
+            {
+                timer.Stop();
+                Txt_Timer.Visibility = Visibility.Hidden;
+            }
+
             BtnRestart.Visibility = Visibility.Collapsed;
         }
 
@@ -138,7 +209,6 @@ namespace Hangman1
             Button btn = (Button)sender;
             btn.IsEnabled = false;
 
-          
             MediaPlayer playMedia = new MediaPlayer();
             playMedia.Open(new Uri("Sons/click.mp3", UriKind.Relative));
             playMedia.Volume = 1;
@@ -157,42 +227,26 @@ namespace Hangman1
             }
 
             Txt_MotCache.Text = string.Join(" ", motAffiche);
-            // Lettre correcte vert
             btn.Background = new SolidColorBrush(Colors.Green);
 
-
-            if (bonneLettre)
-            {
-                tempsRestant += 5;
-            }
-            else
+            if (bonneLettre && timerActive) tempsRestant += 2;
+            else if (!bonneLettre)
             {
                 vies--;
-                tempsRestant -= 2;
                 MiseAJourVies();
-
-
-                // Lettre incorrecte rouge
+                if (timerActive) tempsRestant -= 5;
                 btn.Background = new SolidColorBrush(Colors.Red);
 
-                // Mettre à jour image pendu
                 int indexImage = 6 - vies;
                 if (indexImage < 1) indexImage = 1;
                 if (indexImage > 6) indexImage = 6;
-
                 Images_1.Source = new BitmapImage(new Uri($"Images/{indexImage}.png", UriKind.Relative));
             }
 
             UpdateTimerAffichage();
 
-            if (vies <= 0)
-            {
-                GameOver(false);
-            }
-            else if (!motAffiche.Contains('_'))
-            {
-                GameOver(true);
-            }
+            if (vies <= 0) GameOver(false);
+            else if (!motAffiche.Contains('_')) GameOver(true);
         }
 
         private void MiseAJourVies()
@@ -207,13 +261,22 @@ namespace Hangman1
         private void GameOver(bool gagne)
         {
             timer.Stop();
-
-            // Afficher le mot complet
             Txt_MotCache.Text = motSecret;
+
+            if (gagne)
+            {
+                score += 10;
+                streakt++;
+            }
+            else
+            {
+                streakt = 0;
+            }
+            parties++;
+            UpdateScoreBoard();
 
             MessageBox.Show(gagne ? $"🎉 Bravo, le mot était : {motSecret}" : $"💀 Perdu ! Le mot était : {motSecret}");
 
-            // Jouer le son correspondant
             MediaPlayer playMedia = new MediaPlayer();
             playMedia.Open(new Uri(gagne ? "Sons/victoire.mp3" : "Sons/defaite.mp3", UriKind.Relative));
             playMedia.Volume = 1;
@@ -223,23 +286,56 @@ namespace Hangman1
             {
                 if (ctrl is Button btn)
                 {
-                    string lettre = btn.Content.ToString().ToUpper();
-
                     btn.Background = new SolidColorBrush(Colors.Black);
-
-                    btn.IsEnabled = false; // bloque le bouton
+                    btn.IsEnabled = false;
                 }
             }
 
-
-            // Afficher le bouton Restart
             BtnRestart.Visibility = Visibility.Visible;
         }
 
         private void BtnRestart_Click(object sender, RoutedEventArgs e)
         {
             InitGame();
-            timer.Start();
+        }
+
+        private void UpdateScoreBoard()
+        {
+            Txt_Score.Text = score.ToString();
+            Txt_Streak.Text = streakt.ToString();
+            Txt_Parties.Text = parties.ToString();
+        }
+
+        // --- Gestion boutons difficulté ---
+        private void Btn_Easy_Click(object sender, RoutedEventArgs e)
+        {
+            difficulteChoisie = Difficulté.Easy;
+            timerActive = false;
+            CacherBoutonsDifficulte();
+            InitGame();
+        }
+
+        private void Btn_Medium_Click(object sender, RoutedEventArgs e)
+        {
+            difficulteChoisie = Difficulté.Medium;
+            timerActive = true;
+            CacherBoutonsDifficulte();
+            InitGame();
+        }
+
+        private void Btn_Hard_Click(object sender, RoutedEventArgs e)
+        {
+            difficulteChoisie = Difficulté.Hard;
+            timerActive = true;
+            CacherBoutonsDifficulte();
+            InitGame();
+        }
+
+        private void CacherBoutonsDifficulte()
+        {
+            Btn_Easy.Visibility = Visibility.Hidden;
+            Btn_Medium.Visibility = Visibility.Hidden;
+            Btn_Hard.Visibility = Visibility.Hidden;
         }
     }
 }

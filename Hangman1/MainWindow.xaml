@@ -30,21 +30,21 @@
                    VerticalAlignment="Stretch"
                    Panel.ZIndex="0"/>
 
-            <!--  TIMER AU CENTRE -->
+            <!-- TIMER AU CENTRE -->
             <TextBlock x:Name="Txt_Timer"
                        Text="00:30"
                        FontSize="45"
                        FontWeight="Bold"
                        Foreground="Yellow"
                        HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Panel.ZIndex="10">
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="10" Margin="0,260,0,0">
                 <TextBlock.Effect>
                     <DropShadowEffect BlurRadius="10" Color="Black"/>
                 </TextBlock.Effect>
             </TextBlock>
 
-            <!--  BOUTON RESTART AU-DESSUS DU TIMER -->
+            <!-- BOUTON RESTART AU-DESSUS DU TIMER -->
             <Button x:Name="BtnRestart"
                     Content="Restart"
                     Width="120"
@@ -52,7 +52,7 @@
                     Visibility="Collapsed"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Margin="0,-80,0,0"
+                    Margin="0,80,0,0"
                     Click="BtnRestart_Click"
                     Panel.ZIndex="11">
                 <Button.Background>
@@ -123,9 +123,6 @@
                         </Setter>
                     </Style>
                 </Grid.Resources>
-                
-                
-                
 
                 <!-- Structure principale -->
                 <Grid.ColumnDefinitions>
@@ -144,12 +141,67 @@
                            Margin="0,41,0,0"/>
                 </Grid>
 
-                <!-- Mot caché -->
+                <!-- Partie centrale : ScoreBoard + Mot caché + Menu de démarrage -->
                 <Grid Grid.Column="1" Background="Transparent">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="Auto"/>
+                        <!-- ScoreBoard -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- Mot caché -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- Menu de démarrage -->
                     </Grid.RowDefinitions>
+
+                    <!-- Tableau du haut : Score / Streakt / Parties -->
+                    <WrapPanel x:Name="ScoreBoard"
+                               Grid.Row="0"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Top"
+                               Orientation="Horizontal"
+                               ItemHeight="40"
+                               Margin="0,10,0,10">
+
+                        <!-- Score -->
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Score : "
+                                       FontSize="22"
+                                       FontWeight="Bold"
+                                       Foreground="White"/>
+                            <TextBlock x:Name="Txt_Score"
+                                       Text="0"
+                                       FontSize="22"
+                                       FontWeight="Bold"
+                                       Foreground="Red" Width="27"/>
+                        </StackPanel>
+
+                        <!-- Streakt -->
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Streakt : "
+                                       FontSize="22"
+                                       FontWeight="Bold"
+                                       Foreground="White"/>
+                            <TextBlock x:Name="Txt_Streak"
+                                       Text="0"
+                                       FontSize="22"
+                                       FontWeight="Bold"
+                                       Foreground="Red" Width="17"/>
+                        </StackPanel>
+
+                        <!-- Parties -->
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Parties : "
+                                       FontSize="22"
+                                       FontWeight="Bold"
+                                       Foreground="White"/>
+                            <TextBlock x:Name="Txt_Parties"
+                                       Text="0"
+                                       FontSize="22"
+                                       FontWeight="Bold"
+                                       Foreground="Red" Width="19"/>
+                        </StackPanel>
+                    </WrapPanel>
+
+                    <!-- Mot caché -->
                     <TextBlock x:Name="Txt_MotCache"
                                Grid.Row="1"
                                Text=""
@@ -158,7 +210,50 @@
                                Foreground="White"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
-                               TextAlignment="Center"/>
+                               TextAlignment="Center"
+                               Margin="0,10,0,20"/>
+
+                    <!-- MENU DE DÉMARRAGE (Easy / Medium / Hard) -->
+                    <StackPanel x:Name="MenuStart"
+                                Grid.Row="2"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical"
+                                Visibility="Visible"
+                                Panel.ZIndex="20"
+                                Margin="0,0,0,0">
+
+
+                        <Button x:Name="Btn_Easy"
+                                Content="EASY"
+                                Width="160" Height="40"
+                                Background="Green"
+                                Foreground="White"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Margin="0,5,0,5"
+                                Click="Btn_Easy_Click"/>
+
+                        <Button x:Name="Btn_Medium"
+                                Content="MEDIUM"
+                                Width="160" Height="40"
+                                Background="Orange"
+                                Foreground="White"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Margin="0,5,0,5"
+                                Click="Btn_Medium_Click"/>
+
+                        <Button x:Name="Btn_Hard"
+                                Content="HARD"
+                                Width="160" Height="40"
+                                Background="Red"
+                                Foreground="White"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Margin="0,5,0,5"
+                                Click="Btn_Hard_Click"/>
+                    </StackPanel>
                 </Grid>
 
                 <!-- Clavier et vies -->
@@ -241,14 +336,6 @@
                    Foreground="White"
                    HorizontalContentAlignment="Center"
                    VerticalContentAlignment="Center"/>
-        </Grid>
-        <Grid Grid.Row="1" Background="Transparent">
-            <Label Content="Score"
-           FontSize="25"
-           Foreground="White"
-           HorizontalContentAlignment="Center"
-           VerticalContentAlignment="Top"/>
-           
         </Grid>
     </Grid>
 </Window>
