@@ -176,7 +176,7 @@
 
                         <!-- Streakt -->
                         <StackPanel Orientation="Horizontal" >
-                            <TextBlock Text="Streakt : "
+                            <TextBlock Text="Streak : "
                                        FontSize="22"
                                        FontWeight="Bold"
                                        Foreground="White"/>
