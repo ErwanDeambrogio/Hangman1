@@ -11,3 +11,10 @@ Hangman rule
 Objetive is to find letter behind each _ to reveal the world
 
 Play and have fun
+
+
+
+Notice of somme player.
+Player one: This game is realy good to play.
+Player two: I like the different dificulty.
+Player tree: The Hard level is maybe to hard to complete.
